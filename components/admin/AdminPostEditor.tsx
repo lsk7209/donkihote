@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { BlogPost } from '@/types/blog';
 
@@ -181,28 +181,21 @@ export function AdminPostEditor({ post, allPosts, isNew = false }: AdminPostEdit
   };
 
   return (
-    <Fragment>
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-            {error}
-          </div>
-        )}
-        {success && (
-          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
-            저장되었습니다!
-          </div>
-        )}
-        {validationErrors.length > 0 && (
-          <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded">
-            <div className="font-semibold mb-2">검증 오류:</div>
-            <ul className="list-disc list-inside space-y-1">
-              {validationErrors.map((err, idx) => (
-                <li key={idx}>{err}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <div className={`bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded ${error ? '' : 'hidden'}`}>
+        {error}
+      </div>
+      <div className={`bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded ${success ? '' : 'hidden'}`}>
+        저장되었습니다!
+      </div>
+      <div className={`bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded ${validationErrors.length > 0 ? '' : 'hidden'}`}>
+        <div className="font-semibold mb-2">검증 오류:</div>
+        <ul className="list-disc list-inside space-y-1">
+          {validationErrors.map((err, idx) => (
+            <li key={idx}>{err}</li>
+          ))}
+        </ul>
+      </div>
 
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold mb-4">기본 정보</h2>
@@ -507,7 +500,6 @@ export function AdminPostEditor({ post, allPosts, isNew = false }: AdminPostEdit
         </div>
       </div>
       </form>
-    </Fragment>
   );
 }
 
