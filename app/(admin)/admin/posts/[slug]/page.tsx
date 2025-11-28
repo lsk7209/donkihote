@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPostBySlug } from '@/lib/blog';
-import { getAllPostsForAdmin } from '@/lib/admin';
+import { getPostBySlugForAdmin, getAllPostsForAdmin } from '@/lib/admin';
 import { AdminPostEditor } from '@/components/admin/AdminPostEditor';
 
 export default async function AdminPostEditPage({
@@ -9,7 +8,7 @@ export default async function AdminPostEditPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug, true); // 관리자용: published 여부와 관계없이 가져오기
+  const post = getPostBySlugForAdmin(slug);
 
   if (!post) {
     notFound();
