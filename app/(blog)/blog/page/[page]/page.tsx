@@ -16,6 +16,8 @@ export async function generateStaticParams() {
   }));
 }
 
+export const dynamicParams = false;
+
 export default async function BlogPage({ params }: BlogPageProps) {
   const { page } = await params;
   const currentPage = parseInt(page, 10);

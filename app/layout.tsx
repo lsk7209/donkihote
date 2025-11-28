@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: siteConfig.author.name,
-      email: siteConfig.author.email,
+      url: siteConfig.url,
     },
   ],
   openGraph: {

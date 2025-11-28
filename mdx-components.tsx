@@ -1,4 +1,5 @@
 import type { MDXComponents } from 'mdx/types';
+import type { ComponentProps } from 'react';
 import { Callout } from '@/components/growth-engine/ui-blocks/Callout';
 import { ProsCons } from '@/components/growth-engine/ui-blocks/ProsCons';
 import {
@@ -15,11 +16,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Callout,
     ProsCons,
     Table,
-    thead: TableHead,
-    tbody: TableBody,
-    tr: TableRow,
-    th: TableHeader,
-    td: TableCell,
+    thead: (props: ComponentProps<'thead'>) => <TableHead {...props} />,
+    tbody: (props: ComponentProps<'tbody'>) => <TableBody {...props} />,
+    tr: (props: ComponentProps<'tr'>) => <TableRow {...props} />,
+    th: (props: ComponentProps<'th'>) => <TableHeader {...props} />,
+    td: (props: ComponentProps<'td'>) => <TableCell {...props} />,
     ...components,
   };
 }

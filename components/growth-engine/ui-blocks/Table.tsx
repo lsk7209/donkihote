@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, ComponentProps } from 'react';
 
 interface TableProps {
   children: ReactNode;
@@ -18,31 +18,33 @@ export function Table({ children, className = '' }: TableProps) {
   );
 }
 
-export function TableHead({ children }: { children: ReactNode }) {
-  return <thead className="bg-gray-100 dark:bg-gray-800">{children}</thead>;
+export function TableHead(props: ComponentProps<'thead'>) {
+  return <thead className="bg-gray-100 dark:bg-gray-800" {...props} />;
 }
 
-export function TableBody({ children }: { children: ReactNode }) {
-  return <tbody>{children}</tbody>;
+export function TableBody(props: ComponentProps<'tbody'>) {
+  return <tbody {...props} />;
 }
 
-export function TableRow({ children }: { children: ReactNode }) {
-  return <tr className="border-b border-gray-200 dark:border-gray-700">{children}</tr>;
+export function TableRow(props: ComponentProps<'tr'>) {
+  return <tr className="border-b border-gray-200 dark:border-gray-700" {...props} />;
 }
 
-export function TableHeader({ children }: { children: ReactNode }) {
+export function TableHeader(props: ComponentProps<'th'>) {
   return (
-    <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left font-semibold text-foreground">
-      {children}
-    </th>
+    <th
+      className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left font-semibold text-foreground"
+      {...props}
+    />
   );
 }
 
-export function TableCell({ children }: { children: ReactNode }) {
+export function TableCell(props: ComponentProps<'td'>) {
   return (
-    <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-foreground/80">
-      {children}
-    </td>
+    <td
+      className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-foreground/80"
+      {...props}
+    />
   );
 }
 

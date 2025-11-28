@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getTool } from '@/lib/tools';
+import { getTool, getAllPublishedTools } from '@/lib/tools';
 import { ViewCounter } from '@/components/growth-engine/ViewCounter';
 import { siteConfig } from '@/site.config';
 
@@ -52,6 +52,15 @@ export default async function ToolPage({ params }: ToolPageProps) {
     </article>
   );
 }
+
+export async function generateStaticParams() {
+  const tools = getAllPublishedTools();
+  return tools.map((tool) => ({
+    slug: tool.slug,
+  }));
+}
+
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: ToolPageProps) {
   const { slug } = await params;

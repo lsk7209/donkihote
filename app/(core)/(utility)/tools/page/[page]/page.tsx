@@ -15,6 +15,8 @@ export async function generateStaticParams() {
   }));
 }
 
+export const dynamicParams = false;
+
 export default async function ToolsPage({ params }: ToolsPageProps) {
   const { page } = await params;
   const currentPage = parseInt(page, 10);

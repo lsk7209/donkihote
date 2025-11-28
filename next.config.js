@@ -14,7 +14,12 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [],
   },
+  // Vercel 최적화 설정
+  output: 'standalone',
+  poweredByHeader: false,
+  compress: true,
   async headers() {
     return [
       {

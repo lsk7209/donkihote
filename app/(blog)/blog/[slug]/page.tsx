@@ -39,6 +39,8 @@ export async function generateStaticParams() {
   }));
 }
 
+export const dynamicParams = false;
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
