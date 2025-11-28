@@ -410,7 +410,7 @@ export function AdminPostEditor({ post, allPosts, isNew = false }: AdminPostEdit
               placeholder="MDX 콘텐츠를 입력하세요..."
             />
             <p className="mt-1 text-sm text-gray-500">
-              MDX 형식으로 작성하세요. 컴포넌트 사용 예: &lt;Callout type="info"&gt;내용&lt;/Callout&gt;
+              MDX 형식으로 작성하세요. 컴포넌트 사용 예: &lt;Callout type=&quot;info&quot;&gt;내용&lt;/Callout&gt;
             </p>
           </div>
         </div>
@@ -468,10 +468,10 @@ export function AdminPostEditor({ post, allPosts, isNew = false }: AdminPostEdit
                 onChange={(e) => setFormData({ ...formData, externalLinks: e.target.value })}
                 rows={6}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
-                placeholder='[{"url": "https://example.com", "description": "공식 문서"}]'
+                placeholder='[{&quot;url&quot;: &quot;https://example.com&quot;, &quot;description&quot;: &quot;공식 문서&quot;}]'
               />
               <p className="mt-1 text-sm text-gray-500">
-                JSON 배열 형식: [{"url": "...", "description": "..."}]
+                JSON 배열 형식: [&#123;&quot;url&quot;: &quot;...&quot;, &quot;description&quot;: &quot;...&quot;&#125;]
               </p>
             </div>
           </div>

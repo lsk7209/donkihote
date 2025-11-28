@@ -36,16 +36,16 @@ export default async function AdminSettingsPage() {
         <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <dt className="text-sm font-medium text-gray-500">기본 Meta Title</dt>
-            <dd className="mt-1 text-sm text-gray-900">{siteConfig.seo.title}</dd>
+            <dd className="mt-1 text-sm text-gray-900">{siteConfig.seo.defaultTitle}</dd>
           </div>
           <div>
             <dt className="text-sm font-medium text-gray-500">기본 Meta Description</dt>
-            <dd className="mt-1 text-sm text-gray-900">{siteConfig.seo.description}</dd>
+            <dd className="mt-1 text-sm text-gray-900">{siteConfig.seo.defaultDescription}</dd>
           </div>
           <div className="md:col-span-2">
             <dt className="text-sm font-medium text-gray-500">기본 키워드</dt>
             <dd className="mt-1 text-sm text-gray-900">
-              {siteConfig.seo.keywords.join(', ')}
+              {siteConfig.seo.defaultKeywords}
             </dd>
           </div>
         </dl>
