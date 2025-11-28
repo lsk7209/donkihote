@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 export default function AdminLoginPage() {
   const router = useRouter();
   const [password, setPassword] = useState('');
@@ -13,9 +11,8 @@ export default function AdminLoginPage() {
 
   // 개발 환경에서는 자동으로 로그인
   useEffect(() => {
-    if (isDevelopment) {
-      handleAutoLogin();
-    }
+    // 클라이언트에서는 항상 자동 로그인 시도 (서버에서 개발 환경 체크)
+    handleAutoLogin();
   }, []);
 
   const handleAutoLogin = async () => {
@@ -34,7 +31,7 @@ export default function AdminLoginPage() {
         router.refresh();
       }
     } catch (err) {
-      console.error('Auto login failed:', err);
+      // 개발 환경이 아니면 에러 무시 (정상적인 로그인 흐름)
     } finally {
       setLoading(false);
     }

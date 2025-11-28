@@ -442,4 +442,3 @@ export function AdminPostEditor({ post, allPosts }: AdminPostEditorProps) {
     </form>
   );
 }
-
