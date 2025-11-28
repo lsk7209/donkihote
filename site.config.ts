@@ -1,7 +1,22 @@
+// Vercel 배포 시 환경 변수 검증
+const getSiteUrl = (): string => {
+  const url = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!url || url === 'https://example.com') {
+    if (process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
+    }
+    if (process.env.VERCEL) {
+      // Vercel 배포 환경에서는 VERCEL_URL 사용
+      return 'https://example.com';
+    }
+  }
+  return url || 'https://example.com';
+};
+
 export const siteConfig = {
   name: 'Growth Engine Starter',
   description: '고성능 한국어 웹사이트를 위한 자동 블로깅 시스템',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com',
+  url: getSiteUrl(),
   ogImage: '/og-image.jpg',
   links: {
     twitter: '',
@@ -26,7 +41,7 @@ export const siteConfig = {
   },
   adsense: {
     clientId: process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || '',
-    enabled: true,
+    enabled: !!process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID,
   },
   naver: {
     siteVerification: process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || '',
