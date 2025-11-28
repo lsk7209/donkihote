@@ -129,14 +129,19 @@ Vercel 대시보드 > Project Settings > Environment Variables에서 다음 변�
 3. 변수 값에 공백이나 특수문자 없는지 확인
 4. 재배포 실행
 
-### 5.3 Cron Job 미작동
-**문제**: Cron Job이 실행되지 않음
+### 5.3 Cron Job 제한 및 설정
+**문제**: Cron Job 제한 오류 (Hobby 플랜은 최대 2개)
 **해결**:
-1. Vercel 플랜 확인 (Pro 이상 필요)
-2. `vercel.json`의 Cron 설정 확인
-3. `CRON_SECRET` 환경 변수 설정 확인 (선택사항 - Vercel Cron은 자동 인증)
-4. Vercel 대시보드 > Cron Jobs에서 실행 로그 확인
-5. 수동으로 `/api/cron/daily` 호출 테스트:
+1. **Hobby 플랜 사용 시**: `vercel.json`에서 `crons` 섹션을 제거하고 외부 서비스 사용
+   - [cron-job.org](https://cron-job.org) 또는 [EasyCron](https://www.easycron.com) 사용
+   - 매일 00:00 UTC에 다음 URL 호출:
+     ```
+     https://your-domain.vercel.app/api/cron/daily
+     Authorization: Bearer YOUR_CRON_SECRET
+     ```
+2. **Pro 플랜 이상**: `vercel.json`에 Cron 설정 포함 가능
+3. `CRON_SECRET` 환경 변수 설정 (외부 서비스 사용 시 필수)
+4. 수동 테스트:
    ```bash
    curl -X GET "https://your-domain.vercel.app/api/cron/daily" \
      -H "Authorization: Bearer YOUR_CRON_SECRET"
