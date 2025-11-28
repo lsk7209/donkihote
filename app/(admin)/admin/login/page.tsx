@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminLoginPage() {
@@ -9,13 +9,7 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // 개발 환경에서는 자동으로 로그인
-  useEffect(() => {
-    // 클라이언트에서는 항상 자동 로그인 시도 (서버에서 개발 환경 체크)
-    handleAutoLogin();
-  }, []);
-
-  const handleAutoLogin = async () => {
+  const handleAutoLogin = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch('/api/admin/login', {
@@ -35,7 +29,13 @@ export default function AdminLoginPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  // 개발 환경에서는 자동으로 로그인
+  useEffect(() => {
+    // 클라이언트에서는 항상 자동 로그인 시도 (서버에서 개발 환경 체크)
+    handleAutoLogin();
+  }, [handleAutoLogin]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
