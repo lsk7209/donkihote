@@ -30,12 +30,14 @@ Vercel 대시보드 > Project Settings > Environment Variables에서 다음 변�
 
 #### 필수 환경 변수
 
-| 변수명 | 설명 | 예시 |
-|--------|------|------|
-| `GEMINI_API_KEY` | Google Gemini API 키 | `AIza...` |
-| `TURSO_DATABASE_URL` | Turso 데이터베이스 URL | `libsql://...` |
-| `TURSO_AUTH_TOKEN` | Turso 인증 토큰 | `eyJ...` |
-| `NEXT_PUBLIC_SITE_URL` | 사이트 URL | `https://your-domain.vercel.app` |
+| 변수명 | 설명 | 예시 | 자동 감지 |
+|--------|------|------|----------|
+| `GEMINI_API_KEY` | Google Gemini API 키 | `AIza...` | ❌ |
+| `TURSO_DATABASE_URL` | Turso 데이터베이스 URL | `libsql://...` | ❌ |
+| `TURSO_AUTH_TOKEN` | Turso 인증 토큰 | `eyJ...` | ❌ |
+| `NEXT_PUBLIC_SITE_URL` | 사이트 URL | `https://your-domain.vercel.app` | ✅ VERCEL_URL 사용 |
+
+**참고**: `NEXT_PUBLIC_SITE_URL`이 설정되지 않으면 Vercel이 자동으로 제공하는 `VERCEL_URL`을 사용합니다.
 
 #### 선택적 환경 변수
 
@@ -192,11 +194,15 @@ Vercel 대시보드 > Project Settings > Environment Variables에서 다음 변�
 
 ## 9. 보안 체크리스트
 
-- [ ] 환경 변수에 민감 정보 포함 여부 확인
-- [ ] `CRON_SECRET` 설정 및 검증 로직 확인
-- [ ] API 라우트에 Rate Limiting 적용 확인
-- [ ] Security Headers 설정 확인 (`next.config.js`)
-- [ ] 입력값 검증 및 Sanitization 확인
+- [x] 환경 변수에 민감 정보 포함 여부 확인
+- [x] `CRON_SECRET` 설정 및 검증 로직 확인 (Vercel Cron 자동 인증 지원)
+- [x] API 라우트에 Rate Limiting 적용 확인 (`/api/views/[slug]`)
+- [x] Security Headers 설정 확인 (`next.config.js`)
+- [x] 입력값 검증 및 Sanitization 확인 (`lib/rate-limit.ts`, `app/api/og/route.tsx`)
+- [x] Edge Runtime 사용 확인 (모든 API 라우트)
+- [x] XSS 방지 확인 (OG 이미지 생성 시 입력값 Sanitization)
+- [x] Vercel 환경 변수 자동 감지 (`VERCEL_URL` 사용)
+- [x] AdSense 조건부 활성화 (clientId 있을 때만)
 
 ## 10. 추가 리소스
 
