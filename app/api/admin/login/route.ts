@@ -1,8 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAdminPassword } from '@/lib/admin-auth';
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 export async function POST(request: NextRequest) {
   try {
+    // 개발 환경에서는 비밀번호 검증 없이 항상 성공
+    if (isDevelopment) {
+      const sessionToken = crypto.randomUUID();
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24시간
+
+      const response = NextResponse.json({ success: true });
+      response.cookies.set('admin_session', sessionToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        expires: expiresAt,
+      });
+
+      return response;
+    }
+
     const { password } = await request.json();
 
     if (!password) {

@@ -1,13 +1,44 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // 개발 환경에서는 자동으로 로그인
+  useEffect(() => {
+    if (isDevelopment) {
+      handleAutoLogin();
+    }
+  }, []);
+
+  const handleAutoLogin = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: '' }),
+      });
+
+      if (response.ok) {
+        router.push('/admin');
+        router.refresh();
+      }
+    } catch (err) {
+      console.error('Auto login failed:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
