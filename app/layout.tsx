@@ -12,9 +12,6 @@ const inter = Inter({
   display: 'swap',
 });
 
-// Pretendard 폰트는 선택사항 - 파일이 없으면 Inter 폰트 사용
-// 폰트 파일을 추가하려면 public/fonts/ 디렉토리에 Pretendard 폰트 파일을 추가하세요
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -68,7 +65,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className={inter.variable}>
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col admin-layout-wrapper">
         {siteConfig.adsense.enabled && <GoogleAdSense />}
         <Header />
         <main id="main-content" className="flex-1" tabIndex={-1}>

@@ -35,11 +35,11 @@ export function getPostBySlugForAdmin(slug: string): BlogPost | null {
 
 // 관리자용: published 여부와 관계없이 모든 포스트 가져오기
 export function getAllPostsForAdmin(): BlogPost[] {
-  if (!fs.existsSync(postsDirectory)) {
-    return [];
-  }
-
   try {
+    if (!fs.existsSync(postsDirectory)) {
+      return [];
+    }
+
     const fileNames = fs.readdirSync(postsDirectory);
     const allPostsData = fileNames
       .filter((fileName) => fileName.endsWith('.mdx'))
