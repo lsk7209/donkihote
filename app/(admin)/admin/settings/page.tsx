@@ -1,5 +1,6 @@
 import { siteConfig } from '@/site.config';
 import Link from 'next/link';
+import { ScriptSettings } from '@/components/admin/ScriptSettings';
 
 export default async function AdminSettingsPage() {
   return (
@@ -81,6 +82,14 @@ export default async function AdminSettingsPage() {
             파일을 직접 수정하여 변경할 수 있습니다.
           </p>
         </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow p-6">
+        <h2 className="text-xl font-semibold mb-4">스크립트 설정</h2>
+        <p className="mb-4 text-sm text-gray-600">
+          구글 웹마스터 도구, 애드센스, 네이버 웹마스터 등의 스크립트를 관리합니다.
+        </p>
+        <ScriptSettings />
       </div>
 
       <div className="bg-white rounded-lg shadow p-6">
