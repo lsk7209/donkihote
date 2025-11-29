@@ -84,8 +84,18 @@ export function getAllPostsForAdmin(): BlogPost[] {
   }
 }
 
+// Vercel 환경 체크 (파일 시스템이 읽기 전용)
+const isVercel = !!process.env.VERCEL;
+
 // MDX 파일 생성
 export function createPostFile(slug: string, frontmatter: BlogPostFrontmatter, content: string): void {
+  // Vercel 환경에서는 파일 쓰기 불가
+  if (isVercel) {
+    throw new Error(
+      'Vercel 환경에서는 파일 쓰기가 불가능합니다. 로컬 개발 환경에서만 파일을 생성할 수 있습니다.'
+    );
+  }
+
   // 디렉토리가 없으면 생성
   if (!fs.existsSync(postsDirectory)) {
     fs.mkdirSync(postsDirectory, { recursive: true });
@@ -108,6 +118,13 @@ export function createPostFile(slug: string, frontmatter: BlogPostFrontmatter, c
 
 // MDX 파일 업데이트
 export function updatePostFile(slug: string, frontmatter: BlogPostFrontmatter, content: string): void {
+  // Vercel 환경에서는 파일 쓰기 불가
+  if (isVercel) {
+    throw new Error(
+      'Vercel 환경에서는 파일 쓰기가 불가능합니다. 로컬 개발 환경에서만 파일을 수정할 수 있습니다.'
+    );
+  }
+
   const fullPath = path.join(postsDirectory, `${slug}.mdx`);
   
   if (!fs.existsSync(fullPath)) {
@@ -124,6 +141,13 @@ export function updatePostFile(slug: string, frontmatter: BlogPostFrontmatter, c
 
 // MDX 파일 삭제
 export function deletePostFile(slug: string): void {
+  // Vercel 환경에서는 파일 쓰기 불가
+  if (isVercel) {
+    throw new Error(
+      'Vercel 환경에서는 파일 삭제가 불가능합니다. 로컬 개발 환경에서만 파일을 삭제할 수 있습니다.'
+    );
+  }
+
   const fullPath = path.join(postsDirectory, `${slug}.mdx`);
   
   if (!fs.existsSync(fullPath)) {

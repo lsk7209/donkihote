@@ -10,6 +10,10 @@
     },
     "app/api/**/*.tsx": {
       "maxDuration": 10
+    },
+    "app/api/admin/**/*.ts": {
+      "maxDuration": 30,
+      "memory": 1024
     }
   }
 }
