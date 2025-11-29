@@ -22,11 +22,29 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="/terms"
+                  className="hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-1"
+                  aria-label="이용약관 페이지로 이동"
+                >
+                  이용약관
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about"
                   className="hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-1"
                   aria-label="소개 페이지로 이동"
                 >
                   소개
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-1"
+                  aria-label="문의 페이지로 이동"
+                >
+                  문의
                 </Link>
               </li>
             </ul>

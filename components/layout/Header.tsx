@@ -43,6 +43,13 @@ export function Header() {
           >
             소개
           </Link>
+          <Link
+            href="/contact"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
+            aria-label="문의 페이지로 이동"
+          >
+            문의
+          </Link>
         </nav>
       </div>
     </header>
