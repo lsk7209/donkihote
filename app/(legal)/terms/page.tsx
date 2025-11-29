@@ -12,7 +12,7 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. 약관의 적용</h2>
           <p className="text-foreground/80">
-            본 약관은 {siteConfig.name}(이하 "회사")이 운영하는 웹사이트의 이용과 관련하여 
+            본 약관은 {siteConfig.name}(이하 &quot;회사&quot;)이 운영하는 웹사이트의 이용과 관련하여 
             회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
           </p>
         </section>
@@ -20,9 +20,9 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">2. 용어의 정의</h2>
           <ul className="list-disc list-inside space-y-2 text-foreground/80">
-            <li>"서비스"란 회사가 제공하는 모든 온라인 서비스를 의미합니다.</li>
-            <li>"이용자"란 본 약관에 따라 회사가 제공하는 서비스를 받는 자를 의미합니다.</li>
-            <li>"콘텐츠"란 서비스 내에 게시된 모든 정보, 자료, 데이터 등을 의미합니다.</li>
+            <li>&quot;서비스&quot;란 회사가 제공하는 모든 온라인 서비스를 의미합니다.</li>
+            <li>&quot;이용자&quot;란 본 약관에 따라 회사가 제공하는 서비스를 받는 자를 의미합니다.</li>
+            <li>&quot;콘텐츠&quot;란 서비스 내에 게시된 모든 정보, 자료, 데이터 등을 의미합니다.</li>
           </ul>
         </section>
 
