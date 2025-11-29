@@ -25,49 +25,49 @@ export function CustomBodyStartScripts() {
 
   return (
     <>
-      {/* 구글 애널리틱스 */}
-      {scripts.googleAnalytics && (
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: scripts.googleAnalytics,
-          }}
-        />
-      )}
+           {/* 구글 애널리틱스 - lazyOnload로 성능 최적화 */}
+           {scripts.googleAnalytics && (
+             <Script
+               id="google-analytics"
+               strategy="lazyOnload"
+               dangerouslySetInnerHTML={{
+                 __html: scripts.googleAnalytics,
+               }}
+             />
+           )}
 
-      {/* 애드센스 추가 스크립트 */}
-      {scripts.adsense && (
-        <Script
-          id="adsense-additional"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: scripts.adsense,
-          }}
-        />
-      )}
+           {/* 애드센스 추가 스크립트 - lazyOnload로 성능 최적화 */}
+           {scripts.adsense && (
+             <Script
+               id="adsense-additional"
+               strategy="lazyOnload"
+               dangerouslySetInnerHTML={{
+                 __html: scripts.adsense,
+               }}
+             />
+           )}
 
-      {/* 네이버 애널리틱스 */}
-      {scripts.naverAnalytics && (
-        <Script
-          id="naver-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: scripts.naverAnalytics,
-          }}
-        />
-      )}
+           {/* 네이버 애널리틱스 - lazyOnload로 성능 최적화 */}
+           {scripts.naverAnalytics && (
+             <Script
+               id="naver-analytics"
+               strategy="lazyOnload"
+               dangerouslySetInnerHTML={{
+                 __html: scripts.naverAnalytics,
+               }}
+             />
+           )}
 
-      {/* 커스텀 Body 시작 스크립트 */}
-      {scripts.customBodyStart && (
-        <Script
-          id="custom-body-start"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: scripts.customBodyStart,
-          }}
-        />
-      )}
+           {/* 커스텀 Body 시작 스크립트 - lazyOnload로 성능 최적화 */}
+           {scripts.customBodyStart && (
+             <Script
+               id="custom-body-start"
+               strategy="lazyOnload"
+               dangerouslySetInnerHTML={{
+                 __html: scripts.customBodyStart,
+               }}
+             />
+           )}
     </>
   );
 }

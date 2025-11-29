@@ -1,7 +1,12 @@
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { getPostBySlug, getAllPosts } from '@/lib/blog';
-import { ViewCounter } from '@/components/growth-engine/ViewCounter';
+import { getPostBySlugAsync, getAllPosts } from '@/lib/blog';
+import dynamic from 'next/dynamic';
+
+// ViewCounter를 동적 임포트로 최적화 (클라이언트 컴포넌트)
+const ViewCounter = dynamic(() => import('@/components/growth-engine/ViewCounter').then((mod) => mod.ViewCounter), {
+  ssr: false, // 서버 사이드 렌더링 비활성화 (조회수는 클라이언트에서만 필요)
+});
 import { formatDate } from '@/lib/utils';
 import { siteConfig } from '@/site.config';
 import { optimizeBlogPostMeta } from '@/lib/seo-optimize';
@@ -36,6 +41,7 @@ const mdxComponents = {
 };
 
 export async function generateStaticParams() {
+  // generateStaticParams는 빌드 시 실행되므로 동기 함수 사용
   const posts = getAllPosts();
   return posts.map((post) => ({
     slug: post.slug,
@@ -46,7 +52,7 @@ export const dynamicParams = false;
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlugAsync(slug);
 
   if (!post) {
     notFound();
@@ -167,7 +173,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlugAsync(slug);
 
   if (!post) {
     return {

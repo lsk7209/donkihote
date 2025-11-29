@@ -16,6 +16,7 @@ export async function generateStaticParams() {
 }
 
 export const dynamicParams = false;
+export const revalidate = 3600; // 1시간마다 재생성
 
 export default async function ToolsPage({ params }: ToolsPageProps) {
   const { page } = await params;

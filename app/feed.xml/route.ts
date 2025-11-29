@@ -1,6 +1,8 @@
 import { getAllPosts } from '@/lib/blog';
 import { siteConfig } from '@/site.config';
 
+export const revalidate = 3600; // 1시간마다 재생성
+
 export async function GET() {
   const posts = getAllPosts().slice(0, 20); // 최신 20개만
   const baseUrl = siteConfig.url;
