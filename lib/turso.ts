@@ -63,6 +63,66 @@ export async function getViews(slug: string): Promise<number> {
   }
 }
 
+export async function getTotalViewsStats(): Promise<{
+  totalViews: number;
+  totalPages: number;
+}> {
+  const client = getTursoClient();
+  if (!client) {
+    return { totalViews: 0, totalPages: 0 };
+  }
+
+  try {
+    const result = await client.execute({
+      sql: 'SELECT COUNT(*) as pages, COALESCE(SUM(views), 0) as total FROM page_views',
+      args: [],
+    });
+
+    if (result.rows.length === 0) {
+      return { totalViews: 0, totalPages: 0 };
+    }
+
+    const row = result.rows[0] as { pages?: number; total?: number };
+    const totalPages =
+      typeof row.pages === 'number' ? row.pages : parseInt(String(row.pages || 0), 10) || 0;
+    const totalViews =
+      typeof row.total === 'number' ? row.total : parseInt(String(row.total || 0), 10) || 0;
+
+    return { totalViews, totalPages };
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error fetching total views stats:', error);
+    }
+    return { totalViews: 0, totalPages: 0 };
+  }
+}
+
+export async function getTopViewedPages(
+  limit = 5
+): Promise<Array<{ slug: string; views: number }>> {
+  const client = getTursoClient();
+  if (!client) {
+    return [];
+  }
+
+  try {
+    const result = await client.execute({
+      sql: 'SELECT slug, views FROM page_views ORDER BY views DESC LIMIT ?',
+      args: [limit],
+    });
+
+    return result.rows.map((row: any) => ({
+      slug: String(row.slug),
+      views: typeof row.views === 'number' ? row.views : parseInt(String(row.views || 0), 10) || 0,
+    }));
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error fetching top viewed pages:', error);
+    }
+    return [];
+  }
+}
+
 export async function incrementViews(slug: string): Promise<number> {
   const client = getTursoClient();
   if (!client) {

@@ -3,8 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ConditionalHeaderFooter } from '@/components/layout/ConditionalHeaderFooter';
 import { GoogleAdSense } from '@/components/growth-engine/GoogleAdSense';
-import { CustomScripts, CustomBodyStartScripts, CustomBodyEndScripts } from '@/components/layout/CustomScripts';
-import { MetaTags } from '@/components/layout/MetaTags';
+import { CustomBodyStartScripts, CustomBodyEndScripts } from '@/components/layout/CustomScripts';
 import { siteConfig } from '@/site.config';
 
 const inter = Inter({
@@ -67,8 +66,6 @@ export default function RootLayout({
   return (
     <html lang="ko" className={inter.variable}>
       <body className="min-h-screen flex flex-col">
-        <MetaTags />
-        <CustomScripts />
         <CustomBodyStartScripts />
         {siteConfig.adsense.enabled && <GoogleAdSense />}
         <ConditionalHeaderFooter>{children}</ConditionalHeaderFooter>
