@@ -50,8 +50,8 @@ export default function HomePage() {
 
   return (
     <CalculatorErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pb-[280px]">
-        <div className="max-w-md mx-auto">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-md mx-auto pb-[900px] md:pb-[850px]">
           {/* 헤더 */}
           <header className="text-center py-7 px-6 bg-gradient-to-b from-blue-50 via-white to-white">
             <div className="mb-4">
