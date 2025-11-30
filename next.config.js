@@ -30,8 +30,8 @@ const nextConfig = {
       '@google/generative-ai',
     ],
   },
-  // Pages Router 번들링 최적화
-  bundlePagesRouterDependencies: true,
+  // Vercel 최적화
+  output: 'standalone',
   async headers() {
     return [
       {
@@ -53,6 +53,10 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
           // 캐싱 헤더 추가
           {
             key: 'Cache-Control',
@@ -67,6 +71,20 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // API 라우트 보안 헤더
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
           },
         ],
       },

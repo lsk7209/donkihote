@@ -17,8 +17,8 @@ const getSiteUrl = (): string => {
 };
 
 export const siteConfig = {
-  name: 'Growth Engine Starter',
-  description: '고성능 한국어 웹사이트를 위한 자동 블로깅 시스템',
+  name: 'DonkiCalc',
+  description: '일본 쇼핑 환율 계산기 - 돈키호테 면세 및 할인 계산',
   url: getSiteUrl(),
   ogImage: '/og-image.jpg',
   links: {
@@ -26,13 +26,13 @@ export const siteConfig = {
     github: '',
   },
   author: {
-    name: 'Growth Engine',
+    name: 'DonkiCalc',
     email: 'contact@example.com',
   },
   seo: {
-    defaultTitle: 'Growth Engine Starter',
-    defaultDescription: '고성능 한국어 웹사이트를 위한 자동 블로깅 시스템',
-    defaultKeywords: '블로그, 유틸리티, 도구',
+    defaultTitle: 'DonkiCalc - 일본 쇼핑 환율 계산기',
+    defaultDescription: '일본 돈키호테 쇼핑 시 면세(Tax-free)와 쿠폰 할인을 실시간으로 계산하는 환율 계산기',
+    defaultKeywords: '일본 환율, 돈키호테, 면세 계산, 일본 쇼핑, 환율 계산기',
   },
   blog: {
     postsPerPage: 12,

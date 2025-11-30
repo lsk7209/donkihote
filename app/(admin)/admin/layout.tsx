@@ -51,6 +51,18 @@ export default function AdminLayout({
                   >
                     설정
                   </Link>
+                  <Link
+                    href="/admin/rates"
+                    className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    환율 관리
+                  </Link>
+                  <Link
+                    href="/admin/banners"
+                    className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    배너 관리
+                  </Link>
                 </div>
               </div>
               <div className="flex items-center space-x-4">

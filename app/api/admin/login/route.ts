@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAdminPassword } from '@/lib/admin-auth';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+// 개발 환경 체크 (프로덕션에서는 항상 false)
+const isDevelopment = process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENV !== 'production';
 
 export async function POST(request: NextRequest) {
   try {

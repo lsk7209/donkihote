@@ -14,6 +14,10 @@
     "app/api/admin/**/*.ts": {
       "maxDuration": 30,
       "memory": 1024
+    },
+    "app/api/rates/**/*.ts": {
+      "maxDuration": 5,
+      "memory": 128
     }
   }
 }

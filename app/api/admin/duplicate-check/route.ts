@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAllDuplicateContent } from '@/lib/duplicate-check';
 import { checkAdminAuth } from '@/lib/admin-auth';
+import { generateContentHash, checkDuplicateContent } from '@/lib/duplicate-content-checker';
 
 export const runtime = 'nodejs';
 

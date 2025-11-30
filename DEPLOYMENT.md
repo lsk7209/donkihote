@@ -1,221 +1,173 @@
-# Vercel 배포 가이드
+# DonkiCalc 배포 가이드
 
-이 문서는 Growth Engine Starter Kit을 Vercel에 배포하는 상세 가이드입니다.
+## Vercel 배포 설정
 
-## 1. 사전 준비
+### 1. Vercel 프로젝트 생성
 
-### 1.1 GitHub 저장소 준비
-- GitHub에 프로젝트가 푸시되어 있어야 합니다
-- 저장소는 Public 또는 Private 모두 가능합니다
-
-### 1.2 Vercel 계정 생성
-- [Vercel](https://vercel.com)에 로그인
-- GitHub 계정 연동
-
-## 2. 프로젝트 배포
-
-### 2.1 새 프로젝트 생성
-1. Vercel 대시보드에서 "Add New Project" 클릭
-2. GitHub 저장소 선택 (`lsk7209/starter_kit_v1`)
-3. 프로젝트 설정 확인:
-   - **Framework Preset**: Next.js (자동 감지)
+1. [Vercel](https://vercel.com)에 로그인
+2. "Add New Project" 클릭
+3. GitHub 저장소 선택
+4. 프로젝트 설정:
+   - **Framework Preset**: Next.js
    - **Root Directory**: `./` (기본값)
    - **Build Command**: `npm run build` (기본값)
    - **Output Directory**: `.next` (기본값)
    - **Install Command**: `npm install` (기본값)
 
-### 2.2 환경 변수 설정
+### 2. 환경 변수 설정
 
-Vercel 대시보드 > Project Settings > Environment Variables에서 다음 변수를 설정하세요:
+Vercel 대시보드 > Project Settings > Environment Variables에서 다음 변수들을 설정하세요:
 
 #### 필수 환경 변수
 
-| 변수명 | 설명 | 예시 | 자동 감지 |
-|--------|------|------|----------|
-| `GEMINI_API_KEY` | Google Gemini API 키 | `AIza...` | ❌ |
-| `TURSO_DATABASE_URL` | Turso 데이터베이스 URL | `libsql://...` | ❌ |
-| `TURSO_AUTH_TOKEN` | Turso 인증 토큰 | `eyJ...` | ❌ |
-| `NEXT_PUBLIC_SITE_URL` | 사이트 URL | `https://your-domain.vercel.app` | ✅ VERCEL_URL 사용 |
+| 변수명 | 설명 | 예시 |
+|--------|------|------|
+| `TURSO_DATABASE_URL` | Turso 데이터베이스 URL | `libsql://your-db-name.turso.io` |
+| `TURSO_AUTH_TOKEN` | Turso 인증 토큰 | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` |
 
-**참고**: `NEXT_PUBLIC_SITE_URL`이 설정되지 않으면 Vercel이 자동으로 제공하는 `VERCEL_URL`을 사용합니다.
-
-#### 선택적 환경 변수
+#### 선택 환경 변수
 
 | 변수명 | 설명 | 필수 여부 |
 |--------|------|----------|
-| `NEXT_PUBLIC_ADSENSE_CLIENT_ID` | AdSense 클라이언트 ID | ⚠️ 광고 사용 시 |
-| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console 인증 | ⚠️ SEO 최적화 |
-| `NEXT_PUBLIC_NAVER_SITE_VERIFICATION` | Naver Search Advisor 인증 | ⚠️ 한국 SEO |
-| `CRON_SECRET` | Cron API 보안 키 | ⚠️ Cron 사용 시 |
+| `EXCHANGE_RATE_API_KEY` | 환율 API 키 (ExchangeRate-API) | ⚠️ 환율 자동 갱신 시 필요 |
 | `ADMIN_PASSWORD` | 관리자 대시보드 비밀번호 | ⚠️ 관리자 페이지 사용 시 |
+| `NEXT_PUBLIC_SITE_URL` | 사이트 URL | ⚠️ SEO 최적화 시 |
+| `NEXT_PUBLIC_ADSENSE_CLIENT_ID` | AdSense 클라이언트 ID | ⚠️ 광고 사용 시 |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console 인증 코드 | ⚠️ SEO |
+| `NEXT_PUBLIC_NAVER_SITE_VERIFICATION` | Naver Search Advisor 인증 코드 | ⚠️ SEO |
+| `CRON_SECRET` | Cron API 보안 키 | ⚠️ 외부 Cron 사용 시 |
 
-**중요**: `NEXT_PUBLIC_*` 접두사가 있는 변수는 클라이언트에서 접근 가능합니다.
+**중요**: 환경 변수는 Production, Preview, Development 환경별로 설정할 수 있습니다.
 
-### 2.3 배포 실행
-1. "Deploy" 버튼 클릭
-2. 빌드 로그 확인
-3. 배포 완료 대기 (약 2-3분)
+### 3. Turso 데이터베이스 설정
 
-## 3. 배포 후 설정
+#### Turso CLI 설치
 
-### 3.1 도메인 설정 (선택)
-1. Project Settings > Domains
-2. Custom Domain 추가
-3. DNS 설정 안내에 따라 도메인 연결
+```bash
+# macOS / Linux
+curl -sSfL https://get.tur.so/install.sh | bash
 
-### 3.2 Cron Job 설정
+# Windows (PowerShell)
+irm https://get.tur.so/install.ps1 | iex
+```
 
-#### Vercel Pro 플랜 이상
-- `vercel.json`의 Cron 설정이 자동으로 활성화됩니다
-- 매일 00:00 UTC에 `/api/cron/daily`가 자동 실행됩니다
+#### 데이터베이스 생성 및 마이그레이션
 
-#### Vercel Hobby 플랜
-**옵션 1: Vercel Cron Jobs (베타)**
-1. Project Settings > Cron Jobs
-2. 새 Cron Job 추가:
-   - Path: `/api/cron/daily`
-   - Schedule: `0 0 * * *` (매일 00:00 UTC)
-   - Authorization: Bearer Token 설정 (CRON_SECRET 사용)
+```bash
+# 1. Turso 로그인
+turso auth login
 
-**옵션 2: 외부 서비스 사용**
-- [cron-job.org](https://cron-job.org) 또는 유사 서비스 사용
-- URL: `https://your-domain.vercel.app/api/cron/daily`
-- Schedule: 매일 00:00 KST (또는 원하는 시간)
-- Headers: `Authorization: Bearer YOUR_CRON_SECRET`
+# 2. 데이터베이스 생성
+turso db create donkicalc-db
 
-### 3.3 GitHub Actions 설정
-1. GitHub 저장소 > Settings > Secrets and variables > Actions
-2. `GEMINI_API_KEY` 시크릿 추가
-3. Actions 탭에서 워크플로우가 활성화되었는지 확인
+# 3. 데이터베이스 URL 및 토큰 확인
+turso db show donkicalc-db
 
-## 4. 배포 확인
+# 4. 스키마 적용
+turso db shell donkicalc-db < db/schema.sql
 
-### 4.1 빌드 로그 확인
-- Vercel 대시보드 > Deployments > 최신 배포 클릭
-- Build Logs 탭에서 빌드 과정 확인
+# 또는 직접 SQL 실행
+turso db shell donkicalc-db
+# SQL 파일 내용을 복사하여 실행
+```
 
-### 4.2 사이트 접속 확인
-- 배포된 URL로 접속
-- 주요 페이지 확인:
-  - `/` (홈)
-  - `/blog` (블로그 목록)
-  - `/tools` (도구 목록)
-  - `/about` (소개)
-  - `/privacy` (개인정보 처리방침)
+#### 환경 변수에 추가
 
-### 4.3 기능 테스트
-- [ ] 블로그 포스트 목록 표시
-- [ ] 블로그 포스트 상세 페이지
-- [ ] 도구 목록 표시
-- [ ] 조회수 카운터 작동
-- [ ] AdSense 광고 표시 (설정한 경우)
-- [ ] Sitemap 접근 (`/sitemap.xml`)
-- [ ] Robots.txt 접근 (`/robots.txt`)
+Turso에서 제공하는 URL과 토큰을 Vercel 환경 변수에 추가하세요.
 
-## 5. 문제 해결
+### 4. GitHub Actions 설정 (환율 자동 갱신)
 
-### 5.1 빌드 실패
-**문제**: 빌드 중 에러 발생
-**해결**:
-1. Build Logs에서 에러 메시지 확인
-2. 환경 변수 누락 확인
-3. 로컬에서 `npm run build` 실행하여 동일 에러 재현
-4. 의존성 문제: `package.json` 확인
+#### GitHub Secrets 설정
 
-### 5.2 환경 변수 오류
-**문제**: 런타임 에러 (API 키 누락 등)
-**해결**:
-1. Environment Variables에서 모든 필수 변수 확인
-2. `NEXT_PUBLIC_*` 접두사 확인
-3. 변수 값에 공백이나 특수문자 없는지 확인
-4. 재배포 실행
+GitHub 저장소 > Settings > Secrets and variables > Actions에서 다음 Secrets를 추가하세요:
 
-### 5.3 Cron Job 제한 및 설정
-**문제**: Cron Job 제한 오류 (Hobby 플랜은 최대 2개)
-**해결**:
-1. **Hobby 플랜 사용 시**: `vercel.json`에서 `crons` 섹션을 제거하고 외부 서비스 사용
-   - [cron-job.org](https://cron-job.org) 또는 [EasyCron](https://www.easycron.com) 사용
-   - 매일 00:00 UTC에 다음 URL 호출:
-     ```
-     https://your-domain.vercel.app/api/cron/daily
-     Authorization: Bearer YOUR_CRON_SECRET
-     ```
-2. **Pro 플랜 이상**: `vercel.json`에 Cron 설정 포함 가능
-3. `CRON_SECRET` 환경 변수 설정 (외부 서비스 사용 시 필수)
-4. 수동 테스트:
+| Secret 이름 | 설명 |
+|------------|------|
+| `TURSO_DATABASE_URL` | Turso 데이터베이스 URL |
+| `TURSO_AUTH_TOKEN` | Turso 인증 토큰 |
+| `EXCHANGE_RATE_API_KEY` | ExchangeRate-API 키 (선택) |
+
+#### ExchangeRate-API 키 발급 (선택)
+
+1. [ExchangeRate-API](https://www.exchangerate-api.com/) 가입
+2. Free 플랜으로 시작 (무료, 월 1,500 요청)
+3. API 키 복사하여 GitHub Secrets에 추가
+
+**참고**: API 키가 없어도 기본값(9.05)으로 작동합니다.
+
+### 5. 배포 확인
+
+1. Vercel에서 자동으로 배포가 시작됩니다
+2. 배포 완료 후 제공되는 URL로 접속하여 확인
+3. `/api/rates` 엔드포인트로 환율 조회 테스트
+
+### 6. GitHub Actions 워크플로우 확인
+
+1. GitHub 저장소 > Actions 탭으로 이동
+2. "Update Exchange Rates" 워크플로우 확인
+3. "Run workflow" 버튼으로 수동 실행 테스트
+
+## 트러블슈팅
+
+### 데이터베이스 연결 오류
+
+**증상**: `Database client is not available` 오류
+
+**해결 방법**:
+1. Vercel 환경 변수 확인 (`TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`)
+2. Turso 데이터베이스가 활성화되어 있는지 확인
+3. 토큰이 만료되지 않았는지 확인
+
+### 환율 갱신이 작동하지 않음
+
+**증상**: GitHub Actions가 실패하거나 환율이 갱신되지 않음
+
+**해결 방법**:
+1. GitHub Secrets 확인
+2. `scripts/update-rates.ts` 로컬에서 테스트:
    ```bash
-   curl -X GET "https://your-domain.vercel.app/api/cron/daily" \
-     -H "Authorization: Bearer YOUR_CRON_SECRET"
+   npm run update-rates
    ```
+3. GitHub Actions 로그 확인
 
-### 5.4 데이터베이스 연결 오류
-**문제**: Turso 데이터베이스 연결 실패
-**해결**:
-1. `TURSO_DATABASE_URL`과 `TURSO_AUTH_TOKEN` 확인
-2. Turso 대시보드에서 데이터베이스 상태 확인
-3. 네트워크 방화벽 설정 확인
+### Edge Runtime 오류
 
-## 6. 성능 최적화
+**증상**: `Cannot find module` 또는 `Runtime not supported` 오류
 
-### 6.1 빌드 최적화
-- `next.config.js`에 이미 최적화 설정 포함:
-  - `compress: true` - Gzip 압축 활성화
-  - `poweredByHeader: false` - 보안 헤더 제거
-  - Security Headers 설정 (X-Frame-Options, X-Content-Type-Options 등)
-  - **참고**: `output: 'standalone'`은 Vercel에서 자동으로 처리되므로 설정하지 않습니다.
+**해결 방법**:
+- Edge Runtime은 Node.js API의 일부만 지원합니다
+- `/api/rates`는 Edge Runtime 사용 (Turso 호환)
+- `/api/admin/*`는 Node.js Runtime 사용
 
-### 6.2 Edge Runtime 활용
-- 모든 API 라우트는 Edge Runtime 사용 (`export const runtime = 'edge'`)
-- 빠른 응답 시간과 낮은 지연 시간
-- `vercel.json`에 함수 타임아웃 설정 (10초)
+## 성능 최적화
 
-### 6.3 정적 생성 최적화
-- 모든 페이지는 정적 생성 (SSG)
-- `generateStaticParams`로 빌드 시 모든 경로 생성
-- `dynamicParams = false`로 동적 경로 제한
+### Vercel 함수 설정
 
-## 7. 모니터링
+`vercel.json`에서 함수별 최적화 설정:
 
-### 7.1 Vercel Analytics
-- Vercel 대시보드 > Analytics
-- 페이지뷰, 방문자 수, 성능 메트릭 확인
+- **환율 API** (`/api/rates`): Edge Runtime, 5초 타임아웃
+- **관리자 API** (`/api/admin/*`): Node.js Runtime, 30초 타임아웃, 1GB 메모리
 
-### 7.2 로그 확인
-- Vercel 대시보드 > Deployments > Functions
-- API 라우트 실행 로그 확인
+### 데이터베이스 최적화
 
-## 8. 업데이트 및 재배포
+- Turso는 Edge Database이므로 전 세계 어디서나 빠른 응답
+- 인덱스가 올바르게 설정되어 있는지 확인 (`db/schema.sql`)
 
-### 8.1 자동 배포
-- GitHub에 푸시하면 자동으로 재배포됩니다
-- Production 브랜치 (보통 `main`)에만 자동 배포
+## 모니터링
 
-### 8.2 수동 재배포
-1. Vercel 대시보드 > Deployments
-2. 최신 배포 선택
-3. "Redeploy" 클릭
+### Vercel Analytics
 
-### 8.3 프리뷰 배포
-- Pull Request 생성 시 자동으로 프리뷰 배포 생성
-- 테스트 후 Production에 머지
+1. Vercel 대시보드 > Analytics 활성화
+2. 실시간 트래픽 및 성능 모니터링
 
-## 9. 보안 체크리스트
+### Turso 대시보드
 
-- [x] 환경 변수에 민감 정보 포함 여부 확인
-- [x] `CRON_SECRET` 설정 및 검증 로직 확인 (Vercel Cron 자동 인증 지원)
-- [x] API 라우트에 Rate Limiting 적용 확인 (`/api/views/[slug]`)
-- [x] Security Headers 설정 확인 (`next.config.js`)
-- [x] 입력값 검증 및 Sanitization 확인 (`lib/rate-limit.ts`, `app/api/og/route.tsx`)
-- [x] Edge Runtime 사용 확인 (공개 API 라우트: `/api/views`, `/api/cron`, `/api/og`)
-- [x] 관리자 API는 Node.js Runtime 사용 (파일 시스템 접근 필요)
-- [x] XSS 방지 확인 (OG 이미지 생성 시 입력값 Sanitization)
-- [x] Vercel 환경 변수 자동 감지 (`VERCEL_URL` 사용)
-- [x] AdSense 조건부 활성화 (clientId 있을 때만)
+1. [Turso 대시보드](https://turso.tech)에서 데이터베이스 상태 확인
+2. 쿼리 성능 및 사용량 모니터링
 
-## 10. 추가 리소스
+## 추가 리소스
 
-- [Vercel 공식 문서](https://vercel.com/docs)
-- [Next.js 배포 가이드](https://nextjs.org/docs/deployment)
+- [Vercel 문서](https://vercel.com/docs)
 - [Turso 문서](https://docs.turso.tech)
-- [Google Gemini API 문서](https://ai.google.dev/docs)
-
+- [Next.js 문서](https://nextjs.org/docs)
+- [Drizzle ORM 문서](https://orm.drizzle.team)

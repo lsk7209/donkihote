@@ -1,98 +1,51 @@
 import { MetadataRoute } from 'next';
-import { getAllPosts } from '@/lib/blog';
-import { getAllPostsForAdmin } from '@/lib/admin';
-import { getAllPublishedTools } from '@/lib/tools';
 import { siteConfig } from '@/site.config';
+import { db } from '@/lib/db-server';
+import { posts } from '@/schema';
+import { eq, and } from 'drizzle-orm';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// 동적 렌더링 강제 (빌드 시 DB 접근 불가)
+export const dynamic = 'force-dynamic';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
-  const allPosts = getAllPostsForAdmin();
-  // sitemap에 포함할 포스트만 필터링 (published && sitemap !== false)
-  const posts = allPosts.filter((post) => post.published && post.sitemap !== false);
-  const tools = getAllPublishedTools();
 
-  const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }));
-
-  const blogPageUrls: MetadataRoute.Sitemap = [];
-  const totalBlogPages = Math.ceil(posts.length / siteConfig.blog.postsPerPage);
-  for (let i = 1; i <= totalBlogPages; i++) {
-    blogPageUrls.push({
-      url: `${baseUrl}/blog/page/${i}`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.7,
-    });
+  // 게시된 FAQ 및 Guide 가져오기
+  let publishedPosts: typeof posts.$inferSelect[] = [];
+  
+  try {
+    publishedPosts = await db
+      .select()
+      .from(posts)
+      .where(and(eq(posts.isPublished, true)));
+  } catch (error) {
+    // 빌드 시 또는 DB 연결 실패 시 빈 배열 반환
+    console.warn('Sitemap: Failed to fetch posts, using empty array');
   }
 
-  const toolUrls: MetadataRoute.Sitemap = tools.map((tool) => ({
-    url: `${baseUrl}/tools/${tool.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.7,
+  // FAQ 및 Guide URL 생성
+  const postUrls: MetadataRoute.Sitemap = publishedPosts.map((post) => ({
+    url: `${baseUrl}/${post.category === 'faq' ? 'faq' : 'guide'}/${post.slug}`,
+    lastModified: new Date(post.createdAt),
+    changeFrequency: 'monthly' as const,
+    priority: post.category === 'faq' ? 0.8 : 0.7,
   }));
 
-  const toolPageUrls: MetadataRoute.Sitemap = [];
-  const totalToolPages = Math.ceil(tools.length / siteConfig.tools.postsPerPage);
-  for (let i = 1; i <= totalToolPages; i++) {
-    toolPageUrls.push({
-      url: `${baseUrl}/tools/page/${i}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    });
-  }
-
-  const staticUrls: MetadataRoute.Sitemap = [
+  // 기본 페이지들
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 1,
+      priority: 1.0,
     },
     {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/tools`,
+      url: `${baseUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
   ];
 
-  return [...staticUrls, ...postUrls, ...blogPageUrls, ...toolUrls, ...toolPageUrls];
+  return [...staticPages, ...postUrls];
 }
-
-

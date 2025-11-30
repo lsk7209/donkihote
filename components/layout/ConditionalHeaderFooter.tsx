@@ -11,14 +11,15 @@ export function ConditionalHeaderFooter({
 }) {
   const pathname = usePathname();
   const isAdminPage = pathname?.startsWith('/admin');
+  const isHomePage = pathname === '/';
 
   return (
     <>
-      {!isAdminPage && <Header />}
+      {!isAdminPage && !isHomePage && <Header />}
       <main id="main-content" className="flex-1" tabIndex={-1}>
         {children}
       </main>
-      {!isAdminPage && <Footer />}
+      {!isAdminPage && !isHomePage && <Footer />}
     </>
   );
 }

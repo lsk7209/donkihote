@@ -4,6 +4,7 @@ import './globals.css';
 import { ConditionalHeaderFooter } from '@/components/layout/ConditionalHeaderFooter';
 import { GoogleAdSense } from '@/components/growth-engine/GoogleAdSense';
 import { CustomBodyStartScripts, CustomBodyEndScripts } from '@/components/layout/CustomScripts';
+import { Providers } from './providers';
 import { siteConfig } from '@/site.config';
 
 const inter = Inter({
@@ -15,11 +16,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.seo.defaultTitle,
+    default: '일본 환율 계산기 | DonkiCalc - 돈키호테 면세 할인 계산',
     template: `%s | ${siteConfig.name}`,
   },
-  description: siteConfig.seo.defaultDescription,
-  keywords: siteConfig.seo.defaultKeywords,
+  description: '일본 쇼핑 환율 계산기 DonkiCalc로 돈키호테 면세(Tax-free)와 쿠폰 할인을 실시간으로 계산하세요. 엔화를 원화로 즉시 변환하고 면세 한도를 확인할 수 있습니다.',
+  keywords: '일본 환율, 돈키호테, 면세 계산, 일본 쇼핑, 환율 계산기, 엔화 원화 변환, Tax-free 계산',
   authors: [
     {
       name: siteConfig.author.name,
@@ -56,6 +57,11 @@ export const metadata: Metadata = {
       'naver-site-verification': siteConfig.naver.siteVerification,
     },
   },
+  alternates: {
+    canonical: siteConfig.url,
+  },
+  category: 'Finance',
+  classification: 'Currency Calculator',
 };
 
 export default function RootLayout({
@@ -68,7 +74,9 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <CustomBodyStartScripts />
         {siteConfig.adsense.enabled && <GoogleAdSense />}
-        <ConditionalHeaderFooter>{children}</ConditionalHeaderFooter>
+        <Providers>
+          <ConditionalHeaderFooter>{children}</ConditionalHeaderFooter>
+        </Providers>
         <CustomBodyEndScripts />
       </body>
     </html>
