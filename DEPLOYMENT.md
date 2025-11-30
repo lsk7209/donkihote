@@ -24,6 +24,7 @@ Vercel 대시보드 > Project Settings > Environment Variables에서 다음 변�
 |--------|------|------|
 | `TURSO_DATABASE_URL` | Turso 데이터베이스 URL | `libsql://your-db-name.turso.io` |
 | `TURSO_AUTH_TOKEN` | Turso 인증 토큰 | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` |
+| `CONTACT_EMAIL` | 연락처 이메일 (애드센스 승인 필수) | `contact@donkicalc.com` |
 
 #### 선택 환경 변수
 
