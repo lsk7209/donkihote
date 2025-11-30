@@ -100,7 +100,20 @@ export default function PrivacyPage() {
           <p className="text-foreground/80 mb-4">
             본 웹사이트는 Google AdSense를 사용하여 광고를 제공합니다. Google AdSense는 사용자의 관심사에 맞는 광고를 제공하기 위해 쿠키를 사용할 수 있습니다.
           </p>
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+            <p className="text-sm text-foreground/80 mb-2">
+              <strong>Google AdSense가 수집하는 정보:</strong>
+            </p>
+            <ul className="list-disc list-inside text-sm text-foreground/80 space-y-1 ml-2">
+              <li>IP 주소</li>
+              <li>브라우저 유형 및 버전</li>
+              <li>방문한 페이지 및 클릭한 광고</li>
+              <li>방문 시간 및 체류 시간</li>
+              <li>기기 정보 (모바일/데스크톱)</li>
+            </ul>
+          </div>
           <p className="text-foreground/80 mb-4">
+            Google AdSense는 이러한 정보를 사용하여 맞춤형 광고를 제공하며, Google의 개인정보 처리방침에 따라 처리됩니다. 
             Google의 개인정보 처리방침은{' '}
             <a
               href="https://policies.google.com/privacy"
@@ -111,6 +124,18 @@ export default function PrivacyPage() {
               https://policies.google.com/privacy
             </a>
             에서 확인할 수 있습니다.
+          </p>
+          <p className="text-foreground/80 mb-4">
+            Google AdSense 광고 설정을 관리하거나 광고 쿠키를 비활성화하려면{' '}
+            <a
+              href="https://www.google.com/settings/ads"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Google 광고 설정
+            </a>
+            을 방문하시기 바랍니다.
           </p>
           <h3 className="text-xl font-semibold mb-3">4.3 쿠키 설정 거부</h3>
           <p className="text-foreground/80">

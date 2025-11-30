@@ -88,6 +88,84 @@ export default function HomePage() {
             </section>
           </div>
 
+          {/* 사용 가이드 섹션 */}
+          <section className="mt-8 px-6 pb-6">
+            <div className="max-w-md mx-auto">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 text-center">사용 방법</h2>
+              <div className="space-y-4 bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
+                    1
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">엔화 가격 입력</h3>
+                    <p className="text-sm text-gray-600">
+                      일본에서 구매할 상품의 엔화 가격을 입력하세요.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm">
+                    2
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">할인 옵션 선택</h3>
+                    <p className="text-sm text-gray-600">
+                      Tax Free(면세) 또는 Coupon(쿠폰) 할인을 적용하세요.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-sm">
+                    3
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">결과 확인</h3>
+                    <p className="text-sm text-gray-600">
+                      실시간으로 계산된 원화 가격과 할인 금액을 확인하세요.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 주요 기능 소개 */}
+          <section className="mt-6 px-6 pb-6">
+            <div className="max-w-md mx-auto">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 text-center">주요 기능</h2>
+              <div className="grid grid-cols-1 gap-3">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">💱</span>
+                    <h3 className="font-bold text-blue-900">실시간 환율</h3>
+                  </div>
+                  <p className="text-sm text-blue-700">
+                    최신 환율을 1시간마다 자동으로 업데이트하여 정확한 계산을 제공합니다.
+                  </p>
+                </div>
+                <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">🎁</span>
+                    <h3 className="font-bold text-green-900">자동 할인 계산</h3>
+                  </div>
+                  <p className="text-sm text-green-700">
+                    면세(Tax Free) 10% 할인과 쿠폰 5% 할인을 자동으로 적용합니다.
+                  </p>
+                </div>
+                <div className="bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-200 rounded-xl p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">📊</span>
+                    <h3 className="font-bold text-purple-900">면세 게이지</h3>
+                  </div>
+                  <p className="text-sm text-purple-700">
+                    5,500엔 면세 기준까지 남은 금액을 시각적으로 표시합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* SEO: CTA 및 관련 정보 */}
           <section className="mt-6 px-6 pb-6">
             <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">

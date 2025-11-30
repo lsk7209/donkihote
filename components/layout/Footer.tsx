@@ -123,12 +123,28 @@ export function Footer() {
             </div>
           </div>
           <div className="text-center text-sm text-foreground/60 pt-4 border-t">
-            <p>© {currentYear} {siteConfig.name}. All rights reserved.</p>
+            <p className="font-semibold">© {currentYear} {siteConfig.name}. All rights reserved.</p>
             <p className="mt-2 text-xs">
               본 사이트의 모든 콘텐츠는 저작권법에 의해 보호받습니다. 무단 복제 및 배포를 금지합니다.
             </p>
-            <p className="mt-2">
-              <a href="/feed.xml" className="hover:underline">RSS 피드</a>
+            <div className="mt-4 space-y-2">
+              <p className="text-xs">
+                <strong>연락처:</strong>{' '}
+                <a
+                  href={`mailto:${siteConfig.author.email}`}
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  {siteConfig.author.email}
+                </a>
+              </p>
+              <p className="text-xs">
+                <a href="/feed.xml" className="hover:underline">RSS 피드</a>
+                {' | '}
+                <a href="/sitemap.xml" className="hover:underline">사이트맵</a>
+              </p>
+            </div>
+            <p className="mt-4 text-xs text-foreground/50">
+              본 서비스는 참고용으로 제공되며, 실제 거래 시 공식 환율을 확인하시기 바랍니다.
             </p>
           </div>
         </div>

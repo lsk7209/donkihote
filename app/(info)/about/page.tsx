@@ -104,9 +104,11 @@ export default function AboutPage() {
           <ul className="list-disc list-inside text-foreground/80 space-y-2">
             <li>직관적이고 간단한 인터페이스</li>
             <li>빠른 로딩 속도와 안정적인 성능</li>
-            <li>모바일 터치에 최적화된 키패드</li>
+            <li>모바일 환경에 최적화된 입력 방식</li>
             <li>명확한 시각적 피드백 (면세 게이지, 할인 표시)</li>
             <li>접근성 고려 (스크린 리더 지원, 키보드 네비게이션)</li>
+            <li>회원가입 없이 즉시 사용 가능</li>
+            <li>개인정보 수집 최소화</li>
           </ul>
         </section>
 
@@ -120,7 +122,42 @@ export default function AboutPage() {
             <li><strong>TypeScript</strong>: 타입 안정성과 코드 품질 보장</li>
             <li><strong>Turso (LibSQL)</strong>: Edge 최적화 데이터베이스</li>
             <li><strong>실시간 환율 API</strong>: 정확한 환율 정보 제공</li>
+            <li><strong>GitHub Actions</strong>: 자동화된 환율 업데이트</li>
+            <li><strong>Vercel</strong>: 글로벌 CDN과 빠른 배포</li>
           </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">신뢰성과 보안</h2>
+          <p className="text-foreground/80 mb-4">
+            {siteConfig.name}은 사용자의 신뢰를 최우선으로 생각합니다:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+              <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">🔒 개인정보 보호</h3>
+              <p className="text-sm text-foreground/80">
+                계산 결과는 브라우저에만 저장되며, 서버로 전송되지 않습니다. 개인정보를 수집하지 않습니다.
+              </p>
+            </div>
+            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+              <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">✅ 정확한 정보</h3>
+              <p className="text-sm text-foreground/80">
+                실시간 환율 API를 통해 최신 환율 정보를 제공하며, 1시간마다 자동으로 업데이트됩니다.
+              </p>
+            </div>
+            <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
+              <h3 className="font-semibold text-purple-900 dark:text-purple-100 mb-2">🛡️ 보안</h3>
+              <p className="text-sm text-foreground/80">
+                HTTPS 암호화 통신과 최신 보안 헤더를 적용하여 안전한 서비스를 제공합니다.
+              </p>
+            </div>
+            <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
+              <h3 className="font-semibold text-orange-900 dark:text-orange-100 mb-2">📞 고객 지원</h3>
+              <p className="text-sm text-foreground/80">
+                문의사항이나 버그 리포트는 이메일을 통해 빠르게 응답드립니다.
+              </p>
+            </div>
+          </div>
         </section>
 
         <section className="mb-8">
