@@ -35,6 +35,14 @@ jobs:
       - name: Notify on failure
         if: failure()
         run: |
-          echo "환율 갱신 실패. GitHub Actions 로그를 확인하세요."
+          echo "❌ 환율 갱신 실패"
+          echo "GitHub Actions 로그를 확인하세요."
+          echo "환율 API 키 또는 데이터베이스 연결을 확인해주세요."
           exit 1
+
+      - name: Notify on success
+        if: success()
+        run: |
+          echo "✅ 환율 갱신 성공"
+          echo "다음 갱신은 1시간 후에 자동으로 실행됩니다."
 
