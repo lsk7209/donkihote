@@ -50,8 +50,8 @@ export default function HomePage() {
 
   return (
     <CalculatorErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-md mx-auto pb-32">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pb-[280px]">
+        <div className="max-w-md mx-auto">
           {/* 헤더 */}
           <header className="text-center py-7 px-6 bg-gradient-to-b from-blue-50 via-white to-white">
             <div className="mb-4">
@@ -120,7 +120,7 @@ export default function HomePage() {
           </section>
 
           {/* 키패드 (하단 고정) */}
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl z-10 safe-area-inset-bottom">
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl z-10" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0)' }}>
             <div className="max-w-md mx-auto">
               <Keypad />
             </div>

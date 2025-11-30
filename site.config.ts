@@ -27,7 +27,7 @@ export const siteConfig = {
   },
   author: {
     name: 'DonkiCalc',
-    email: 'contact@example.com',
+    email: process.env.CONTACT_EMAIL || 'contact@donkicalc.com', // 실제 연락처 이메일로 변경 필요
   },
   seo: {
     defaultTitle: 'DonkiCalc - 일본 쇼핑 환율 계산기',

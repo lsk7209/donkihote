@@ -32,8 +32,8 @@ export function Keypad() {
   }, [clear, handleVibrate]);
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 py-4 bg-white">
-      <div className="grid grid-cols-3 gap-2.5">
+    <div className="w-full max-w-md mx-auto px-4 py-5 bg-white">
+      <div className="grid grid-cols-3 gap-3">
         {/* 숫자 키패드 - 더 큰 터치 영역 */}
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
           <button

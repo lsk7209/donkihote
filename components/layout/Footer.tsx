@@ -73,11 +73,64 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t text-center text-sm text-foreground/60">
-          <p>© {currentYear} {siteConfig.name}. All rights reserved.</p>
-          <p className="mt-2">
-            <a href="/feed.xml" className="hover:underline">RSS 피드</a>
-          </p>
+        <div className="mt-8 pt-8 border-t">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <h3 className="font-semibold mb-2">서비스</h3>
+              <ul className="space-y-1 text-sm text-foreground/80" role="list">
+                <li>
+                  <Link
+                    href="/faq"
+                    className="hover:text-foreground transition-colors"
+                    aria-label="FAQ 페이지로 이동"
+                  >
+                    자주 묻는 질문
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/guide/donkicalc-complete-usage-guide"
+                    className="hover:text-foreground transition-colors"
+                    aria-label="사용법 가이드로 이동"
+                  >
+                    사용법 가이드
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">법적 정보</h3>
+              <ul className="space-y-1 text-sm text-foreground/80" role="list">
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="hover:text-foreground transition-colors"
+                    aria-label="개인정보 처리방침 페이지로 이동"
+                  >
+                    개인정보 처리방침
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/terms"
+                    className="hover:text-foreground transition-colors"
+                    aria-label="이용약관 페이지로 이동"
+                  >
+                    이용약관
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-center text-sm text-foreground/60 pt-4 border-t">
+            <p>© {currentYear} {siteConfig.name}. All rights reserved.</p>
+            <p className="mt-2 text-xs">
+              본 사이트의 모든 콘텐츠는 저작권법에 의해 보호받습니다. 무단 복제 및 배포를 금지합니다.
+            </p>
+            <p className="mt-2">
+              <a href="/feed.xml" className="hover:underline">RSS 피드</a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

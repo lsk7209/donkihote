@@ -19,22 +19,22 @@ export function Header() {
           <span className="font-bold text-xl">{siteConfig.name}</span>
         </Link>
         <nav
-          className="flex items-center space-x-6"
+          className="flex items-center space-x-4 md:space-x-6"
           aria-label="주요 네비게이션"
         >
-          <Link
-            href="/blog"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
-            aria-label="블로그 페이지로 이동"
-          >
-            블로그
-          </Link>
           <Link
             href="/tools"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
             aria-label="도구 페이지로 이동"
           >
             도구
+          </Link>
+          <Link
+            href="/faq"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
+            aria-label="FAQ 페이지로 이동"
+          >
+            FAQ
           </Link>
           <Link
             href="/about"
