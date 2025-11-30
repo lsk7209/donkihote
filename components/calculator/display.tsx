@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useCalculatorStore } from '@/lib/stores/calculator';
 
 export function Display() {
@@ -8,6 +8,8 @@ export function Display() {
   const input = useCalculatorStore((state) => state.input);
   const result = useCalculatorStore((state) => state.result);
   const rate = useCalculatorStore((state) => state.rate);
+  const setInput = useCalculatorStore((state) => state.setInput);
+  const clear = useCalculatorStore((state) => state.clear);
 
   const formattedInput = useMemo(() => {
     const inputValue = parseFloat(input) || 0;
@@ -18,9 +20,17 @@ export function Display() {
     return result.toLocaleString('ko-KR');
   }, [result]);
 
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  }, [setInput]);
+
+  const handleInputFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.select();
+  }, []);
+
   return (
     <div className="w-full max-w-md mx-auto px-6 py-5 space-y-5">
-      {/* 입력값 표시 (엔화) - 카드 스타일 */}
+      {/* 입력 필드 및 표시 (엔화) - 카드 스타일 */}
       <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 border border-slate-200 shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -33,10 +43,36 @@ export function Display() {
             1 JPY = {rate.toFixed(2)} KRW
           </div>
         </div>
-        <div className="text-right">
-          <div className="text-6xl font-extrabold text-slate-900 tracking-tight">
-            ¥{formattedInput}
+        <div className="space-y-3">
+          {/* 입력 필드 */}
+          <div className="relative">
+            <div className="flex items-center justify-end gap-2">
+              <span className="text-6xl font-extrabold text-slate-900 tracking-tight">¥</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={input === '0' ? '' : input}
+                onChange={handleInputChange}
+                onFocus={handleInputFocus}
+                placeholder="0"
+                className="w-full text-6xl font-extrabold text-slate-900 tracking-tight bg-transparent border-none outline-none text-right placeholder:text-gray-300 min-w-0 flex-1"
+                aria-label="일본 가격 입력 (엔화)"
+              />
+            </div>
           </div>
+          {/* 삭제 버튼 */}
+          {input !== '0' && input !== '' && (
+            <div className="text-right">
+              <button
+                onClick={clear}
+                className="text-xs text-gray-500 hover:text-gray-700 underline"
+                type="button"
+                aria-label="전체 삭제"
+              >
+                초기화
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

@@ -19,6 +19,8 @@ interface CalculatorState {
 interface CalculatorActions {
   // 숫자 입력
   appendDigit: (digit: string) => void;
+  // 입력값 직접 설정
+  setInput: (value: string) => void;
   // 백스페이스
   backspace: () => void;
   // 전체 삭제
@@ -61,6 +63,17 @@ export const useCalculatorStore = create<CalculatorStore>()(
       set({ input: digit });
     } else {
       set({ input: input + digit });
+    }
+    get().calculate();
+  },
+
+  setInput: (value: string) => {
+    // 숫자만 허용하고 최대 길이 제한
+    const numericValue = value.replace(/[^0-9]/g, '').slice(0, CALCULATOR_CONSTANTS.MAX_INPUT_LENGTH);
+    if (numericValue === '' || numericValue === '0') {
+      set({ input: '0' });
+    } else {
+      set({ input: numericValue });
     }
     get().calculate();
   },
