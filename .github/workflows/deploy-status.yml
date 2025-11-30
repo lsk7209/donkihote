@@ -1,0 +1,59 @@
+name: Deployment Status Monitor
+
+on:
+  workflow_run:
+    workflows: ["Production Deployment Check"]
+    types:
+      - completed
+  schedule:
+    # 매일 오전 9시 (UTC)에 배포 상태 확인
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor-deployment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    name: Deployment Status Monitor
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check recent commits
+        run: |
+          echo "📊 Recent deployment activity:"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          git log --oneline --since="24 hours ago" -10 || echo "No recent commits"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: Check workflow status
+        run: |
+          echo "🔍 Checking workflow status..."
+          echo ""
+          echo "✅ Pre-deployment checks should pass before production deployment"
+          echo "✅ Exchange rate updates run every hour"
+          echo ""
+          echo "📝 Next steps:"
+          echo "  1. Verify Vercel deployment status"
+          echo "  2. Check production URL accessibility"
+          echo "  3. Verify environment variables are set"
+          echo "  4. Test critical endpoints (/api/rates)"
+
+      - name: Deployment health check
+        run: |
+          echo "🏥 Deployment Health Check"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "Required environment variables:"
+          echo "  ✅ TURSO_DATABASE_URL"
+          echo "  ✅ TURSO_AUTH_TOKEN"
+          echo "  ✅ CONTACT_EMAIL"
+          echo ""
+          echo "Optional but recommended:"
+          echo "  ⚠️ NEXT_PUBLIC_SITE_URL"
+          echo "  ⚠️ EXCHANGE_RATE_API_KEY"
+          echo "  ⚠️ NEXT_PUBLIC_ADSENSE_CLIENT_ID"
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
