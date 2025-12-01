@@ -10,6 +10,7 @@
     "generate": "tsx scripts/generator.ts",
     "update-rates": "tsx scripts/update-rates.ts",
     "seed-guides": "tsx scripts/seed-guide-content.ts",
+    "seed-faq": "tsx scripts/seed-faq-content.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },

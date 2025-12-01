@@ -166,6 +166,115 @@ export default function HomePage() {
             </div>
           </section>
 
+          {/* 바이럴 가능한 재미있는 정보 섹션 */}
+          <section className="mt-8 px-6 pb-6">
+            <div className="max-w-md mx-auto">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 text-center">
+                💡 돈키호테 쇼핑 꿀팁
+              </h2>
+              <div className="space-y-3">
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">🔥</span>
+                    <div>
+                      <h3 className="font-bold text-orange-900 text-sm mb-1">
+                        최대 17% 할인 받는 비법!
+                      </h3>
+                      <p className="text-xs text-orange-700 leading-relaxed">
+                        면세 10% + 쿠폰 7% = 최대 17% 할인!<br />
+                        30,000엔 이상 구매 시 쿠폰 7% 할인 적용 가능해요.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-pink-50 to-rose-50 border-2 border-pink-200 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">🎯</span>
+                    <div>
+                      <h3 className="font-bold text-pink-900 text-sm mb-1">
+                        면세 한도 딱 맞추기
+                      </h3>
+                      <p className="text-xs text-pink-700 leading-relaxed">
+                        5,500엔만 넘으면 10% 면세 자동 적용!<br />
+                        위 게이지를 보면서 딱 맞춰 사면 더 알뜰해요.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">📱</span>
+                    <div>
+                      <h3 className="font-bold text-green-900 text-sm mb-1">
+                        쿠폰은 미리 준비하세요!
+                      </h3>
+                      <p className="text-xs text-green-700 leading-relaxed">
+                        돈키호테 앱에서 쿠폰 바코드를 미리 다운로드하고,<br />
+                        계산 전에 직원에게 보여주면 5~7% 추가 할인!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">⏰</span>
+                    <div>
+                      <h3 className="font-bold text-blue-900 text-sm mb-1">
+                        쇼핑 타이밍이 중요해요
+                      </h3>
+                      <p className="text-xs text-blue-700 leading-relaxed">
+                        저녁 8시 이후는 혼잡해요. 오전이나 오후 시간대가<br />
+                        여유롭게 쇼핑하기 좋아요!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 재미있는 통계/정보 카드 */}
+          <section className="mt-6 px-6 pb-6">
+            <div className="max-w-md mx-auto">
+              <div className="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 border-2 border-purple-200 rounded-2xl p-6 shadow-lg">
+                <div className="text-center mb-4">
+                  <div className="text-4xl mb-2">📊</div>
+                  <h3 className="font-bold text-purple-900 text-lg mb-2">
+                    알고 계셨나요?
+                  </h3>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-start gap-2">
+                    <span className="text-purple-600 font-bold">💡</span>
+                    <p className="text-purple-800">
+                      <strong>돈키호테</strong>는 일본 전국에 <strong>600개 이상</strong>의 매장이 있어요!
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-purple-600 font-bold">💡</span>
+                    <p className="text-purple-800">
+                      <strong>24시간 영업</strong>하는 매장도 많아서 언제든 쇼핑 가능해요!
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-purple-600 font-bold">💡</span>
+                    <p className="text-purple-800">
+                      한국 여행객들이 가장 많이 방문하는 쇼핑 장소 중 하나예요!
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 pt-4 border-t border-purple-200">
+                  <Link
+                    href="/guide/donki-complete-shopping-guide-2025"
+                    className="block text-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all active:scale-95"
+                  >
+                    📖 더 많은 쇼핑 팁 보기
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* SEO: CTA 및 관련 정보 */}
           <section className="mt-6 px-6 pb-6">
             <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
@@ -182,7 +291,7 @@ export default function HomePage() {
                 </div>
               </Link>
               <Link
-                href="/guide/japan-shopping-guide"
+                href="/guide/donki-complete-shopping-guide-2025"
                 className="p-4 bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-200 rounded-xl hover:from-purple-100 hover:to-purple-200 hover:border-purple-300 transition-all active:scale-95 shadow-sm"
               >
                 <div className="text-center">
