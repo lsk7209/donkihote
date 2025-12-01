@@ -60,31 +60,47 @@ export function Gauge() {
             </div>
           </div>
 
-          {/* 상태 메시지 - 카드 스타일 */}
+          {/* 상태 메시지 - 카드 스타일 (더 재미있고 감정적으로) */}
           {isAchieved ? (
-            <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 border-2 border-green-300 rounded-xl p-5 shadow-md">
-              <div className="flex items-center justify-center gap-4">
-                <div className="text-4xl animate-bounce">🎉</div>
-                <div className="text-center flex-1">
-                  <div className="text-xl font-black text-green-700 mb-1">
-                    면세 달성!
-                  </div>
-                  <div className="text-sm font-medium text-green-600">
-                    추가 쇼핑으로 더 할인받으세요
+            <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 border-2 border-green-300 rounded-xl p-5 shadow-md relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-green-200/30 rounded-full -mr-10 -mt-10"></div>
+              <div className="relative z-10">
+                <div className="flex items-center justify-center gap-4">
+                  <div className="text-5xl animate-bounce">🎉</div>
+                  <div className="text-center flex-1">
+                    <div className="text-2xl font-black text-green-700 mb-1">
+                      면세 달성! 대박! 🎊
+                    </div>
+                    <div className="text-sm font-semibold text-green-600 mb-2">
+                      10% 면세 혜택 자동 적용! 이제 쿠폰까지 받으면 더 할인!
+                    </div>
+                    {remaining === 0 && (
+                      <div className="text-xs font-bold text-green-700 bg-green-200/50 px-2 py-1 rounded-full inline-block">
+                        완벽한 타이밍! 프로 쇼퍼예요! 👑
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 border-2 border-orange-300 rounded-xl p-5 shadow-md">
-              <div className="flex items-center justify-center gap-4">
-                <div className="text-3xl">💡</div>
-                <div className="text-center flex-1">
-                  <div className="text-lg font-black text-orange-700 mb-2">
-                    면세까지 <span className="text-2xl text-orange-600">¥{formattedRemaining}</span> 부족
-                  </div>
-                  <div className="text-sm font-medium text-orange-600">
-                    조금만 더 쇼핑하면 면세 혜택!
+            <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 border-2 border-orange-300 rounded-xl p-5 shadow-md relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-orange-200/30 rounded-full -mr-10 -mt-10"></div>
+              <div className="relative z-10">
+                <div className="flex items-center justify-center gap-4">
+                  <div className="text-4xl">🎯</div>
+                  <div className="text-center flex-1">
+                    <div className="text-xl font-black text-orange-700 mb-2">
+                      면세까지 <span className="text-3xl text-orange-600">¥{formattedRemaining}</span> 부족!
+                    </div>
+                    <div className="text-sm font-semibold text-orange-600 mb-2">
+                      조금만 더 쇼핑하면 10% 면세 혜택! 이거 놓치면 후회해요! 😱
+                    </div>
+                    {remaining < 1000 && (
+                      <div className="text-xs font-bold text-orange-700 bg-orange-200/50 px-2 py-1 rounded-full inline-block">
+                        거의 다 왔어요! 조금만 더! 💪
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
