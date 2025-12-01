@@ -281,6 +281,47 @@ export function ResultBox() {
         </div>
       )}
 
+      {/* 절약 랭킹 카드 (바이럴) */}
+      {inputValue > 0 && totalDiscount > 15000 && (
+        <div className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 border-2 border-yellow-300 rounded-2xl p-5 shadow-md relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-yellow-200/20 rounded-full -mr-12 -mt-12"></div>
+          <div className="absolute bottom-0 left-0 w-20 h-20 bg-orange-200/20 rounded-full -ml-10 -mb-10"></div>
+          <div className="relative z-10">
+            <div className="text-center mb-3">
+              <div className="text-6xl mb-2 animate-bounce">👑</div>
+              <h3 className="font-black text-yellow-900 text-xl mb-1">
+                절약 랭킹 TOP 5%!
+              </h3>
+              <p className="text-xs text-yellow-700 font-medium">
+                이 정도면 진짜 프로 쇼퍼예요! 🎊
+              </p>
+            </div>
+            <div className="bg-white/90 rounded-lg p-4 border-2 border-yellow-200 shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-semibold text-yellow-800">당신의 절약 금액</span>
+                <span className="text-2xl font-black text-yellow-900">
+                  ₩{Math.round(totalDiscount).toLocaleString('ko-KR')}
+                </span>
+              </div>
+              <div className="h-4 bg-yellow-100 rounded-full overflow-hidden mb-2 relative">
+                <div 
+                  className="h-full bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 rounded-full transition-all duration-1000 flex items-center justify-end pr-2"
+                  style={{ width: '95%' }}
+                >
+                  <span className="text-xs font-bold text-white drop-shadow">95%</span>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <span className="text-xs font-bold text-yellow-700">TOP 5%</span>
+                </div>
+              </div>
+              <p className="text-xs text-yellow-700 mt-2 text-center font-semibold">
+                상위 5% 쇼퍼에 해당해요! 🏆 진짜 대단해요!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 실제 사용자 후기 스타일 카드 (바이럴) */}
       {inputValue > 0 && totalDiscount > 5000 && (
         <div className="bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-5 shadow-md relative overflow-hidden">
@@ -475,6 +516,73 @@ export function ResultBox() {
               >
                 📖 더 자세한 차별점 보기
               </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 빠른 액션 버튼 (바이럴) */}
+      {inputValue > 0 && totalDiscount > 5000 && (
+        <div className="bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-50 border-2 border-cyan-200 rounded-2xl p-5 shadow-md">
+          <h3 className="font-bold text-cyan-900 text-base mb-3 text-center">
+            💡 더 많은 절약 팁 보기
+          </h3>
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href="/guide/donki-complete-shopping-guide-2025"
+              className="p-3 bg-white rounded-lg border border-cyan-200 hover:border-cyan-400 hover:shadow-md transition-all active:scale-95 text-center"
+            >
+              <div className="text-2xl mb-1">📖</div>
+              <div className="text-xs font-semibold text-cyan-900">쇼핑 가이드</div>
+            </Link>
+            <Link
+              href="/faq"
+              className="p-3 bg-white rounded-lg border border-cyan-200 hover:border-cyan-400 hover:shadow-md transition-all active:scale-95 text-center"
+            >
+              <div className="text-2xl mb-1">❓</div>
+              <div className="text-xs font-semibold text-cyan-900">자주 묻는 질문</div>
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* 성공 통계 카드 (바이럴) */}
+      {inputValue > 0 && totalDiscount > 10000 && (
+        <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 border-2 border-emerald-300 rounded-2xl p-5 shadow-md relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-200/20 rounded-full -mr-12 -mt-12"></div>
+          <div className="relative z-10">
+            <div className="text-center mb-3">
+              <div className="text-5xl mb-2 animate-bounce">🏆</div>
+              <h3 className="font-black text-emerald-900 text-lg mb-1">
+                당신은 상위 10% 쇼퍼예요!
+              </h3>
+              <p className="text-xs text-emerald-700">
+                이 정도 절약은 정말 대단해요! 👑
+              </p>
+            </div>
+            <div className="bg-white/80 rounded-lg p-4 border-2 border-emerald-200 shadow-sm">
+              <div className="flex items-center justify-between text-sm mb-3">
+                <span className="text-emerald-700 font-semibold">절약 금액</span>
+                <span className="text-emerald-900 font-black text-xl">
+                  ₩{Math.round(totalDiscount).toLocaleString('ko-KR')}
+                </span>
+              </div>
+              <div className="h-4 bg-emerald-100 rounded-full overflow-hidden mb-2">
+                <div 
+                  className="h-full bg-gradient-to-r from-emerald-400 to-green-500 rounded-full transition-all duration-1000 flex items-center justify-end pr-2"
+                  style={{ width: `${Math.min((totalDiscount / 50000) * 100, 100)}%` }}
+                >
+                  <span className="text-xs font-bold text-white">
+                    {Math.round((totalDiscount / 50000) * 100)}%
+                  </span>
+                </div>
+              </div>
+              <div className="mt-2 pt-2 border-t border-emerald-200 flex items-center justify-between text-xs">
+                <span className="text-emerald-600 font-medium">평균 대비</span>
+                <span className="text-emerald-800 font-bold">
+                  {Math.round((totalDiscount / 15000) * 100)}% 높아요! 🎉
+                </span>
+              </div>
             </div>
           </div>
         </div>

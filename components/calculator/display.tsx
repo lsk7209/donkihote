@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import { useCalculatorStore } from '@/lib/stores/calculator';
 
 export function Display() {
+  const [animatedResult, setAnimatedResult] = useState(0);
   // 셀렉터를 사용하여 불필요한 리렌더링 방지
   const input = useCalculatorStore((state) => state.input);
   const result = useCalculatorStore((state) => state.result);
@@ -20,6 +21,26 @@ export function Display() {
     return result.toLocaleString('ko-KR');
   }, [result]);
 
+  // 숫자 카운트업 애니메이션
+  useEffect(() => {
+    const duration = 500; // 0.5초
+    const steps = 30;
+    const stepValue = result / steps;
+    let currentStep = 0;
+
+    const timer = setInterval(() => {
+      currentStep++;
+      if (currentStep >= steps) {
+        setAnimatedResult(result);
+        clearInterval(timer);
+      } else {
+        setAnimatedResult(Math.round(stepValue * currentStep));
+      }
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, [result]);
+
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   }, [setInput]);
@@ -32,17 +53,20 @@ export function Display() {
     <div className="w-full max-w-md mx-auto px-6 py-5 space-y-5">
       {/* 입력 필드 및 표시 (엔화) - 카드 스타일 */}
       <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 border border-slate-200 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">🇯🇵</span>
-            <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-              일본 가격
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-lg animate-pulse">🇯🇵</span>
+              <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                일본 가격
+              </div>
+            </div>
+            <div className="text-xs font-medium text-gray-500 bg-white px-2 py-1 rounded-md border border-gray-200 shadow-sm">
+              <span className="inline-flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                1 JPY = {rate.toFixed(2)} KRW
+              </span>
             </div>
           </div>
-          <div className="text-xs font-medium text-gray-500 bg-white px-2 py-1 rounded-md">
-            1 JPY = {rate.toFixed(2)} KRW
-          </div>
-        </div>
         <div className="space-y-3">
           {/* 입력 필드 */}
           <div className="relative">
@@ -55,8 +79,9 @@ export function Display() {
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 placeholder="0"
-                className="w-full text-6xl font-extrabold text-slate-900 tracking-tight bg-transparent border-none outline-none text-right placeholder:text-gray-300 min-w-0 flex-1"
+                className="w-full text-6xl font-extrabold text-slate-900 tracking-tight bg-transparent border-none outline-none text-right placeholder:text-gray-300 min-w-0 flex-1 focus:ring-2 focus:ring-blue-300 rounded-lg px-2 transition-all"
                 aria-label="일본 가격 입력 (엔화)"
+                maxLength={10}
               />
             </div>
           </div>
@@ -65,22 +90,22 @@ export function Display() {
             <div className="text-right">
               <button
                 onClick={clear}
-                className="text-xs text-gray-500 hover:text-gray-700 underline"
+                className="text-xs text-gray-500 hover:text-gray-700 hover:font-semibold underline transition-all active:scale-95"
                 type="button"
                 aria-label="전체 삭제"
               >
-                초기화
+                ✕ 초기화
               </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* 화살표 아이콘 */}
+      {/* 화살표 아이콘 - 애니메이션 추가 */}
       <div className="flex justify-center -my-2">
-        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-md animate-bounce">
+          <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
       </div>
@@ -106,9 +131,21 @@ export function Display() {
             </div>
           </div>
           <div className="text-right">
-            <div className="text-7xl font-black text-white tracking-tight drop-shadow-lg">
-              ₩{formattedResult}
+            <div 
+              className="text-7xl font-black text-white tracking-tight drop-shadow-lg transition-all duration-300"
+              key={result}
+            >
+              <span className="inline-block">₩</span>
+              <span className="inline-block animate-[fadeIn_0.3s_ease-in]">
+                {animatedResult.toLocaleString('ko-KR')}
+              </span>
             </div>
+            {/* 할인 적용 시 시각적 피드백 */}
+            {(isTaxFree || isCoupon) && result > 0 && (
+              <div className="text-xs text-blue-200 mt-2 font-medium animate-pulse">
+                ✨ 할인 적용 완료!
+              </div>
+            )}
           </div>
           <div className="mt-4 pt-4 border-t border-blue-400/40">
             <div className="text-xs font-medium text-blue-100 text-center">

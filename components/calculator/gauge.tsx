@@ -30,33 +30,43 @@ export function Gauge() {
           {/* 제목 */}
           <div className="text-center mb-3">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="text-xl">🎯</span>
+              <span className="text-2xl animate-pulse-subtle">🎯</span>
               <div className="text-base font-bold text-gray-800">
                 면세 달성 현황
               </div>
             </div>
-            <div className="text-xs font-medium text-gray-500 bg-gray-50 px-3 py-1 rounded-full inline-block">
-              기준: ¥{taxFreeThreshold.toLocaleString('ja-JP')}
+            <div className="text-xs font-medium text-gray-500 bg-gray-50 px-3 py-1 rounded-full inline-block border border-gray-200">
+              기준: ¥{taxFreeThreshold.toLocaleString('ja-JP')} 이상 구매 시 10% 면세!
             </div>
           </div>
 
           {/* 진행률 바 - 더 두껍고 시각적 */}
           <div className="relative mb-4">
-            <div className="h-10 bg-gray-100 rounded-full overflow-hidden shadow-inner border-2 border-gray-200">
+            <div className="h-10 bg-gray-100 rounded-full overflow-hidden shadow-inner border-2 border-gray-200 relative">
               <div
                 className={`absolute top-0 left-0 h-full transition-all duration-700 ease-out flex items-center justify-end pr-3 ${
                   isAchieved
-                    ? 'bg-gradient-to-r from-green-500 via-green-500 to-green-600'
+                    ? 'bg-gradient-to-r from-green-500 via-green-500 to-green-600 animate-pulse'
                     : 'bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600'
                 }`}
                 style={{ width: `${progress}%` }}
               >
                 {progress > 20 && (
-                  <span className="text-sm font-black text-white drop-shadow-lg">
+                  <span className="text-sm font-black text-white drop-shadow-lg animate-fadeIn">
                     {Math.round(progress)}%
                   </span>
                 )}
               </div>
+              {/* 달성 시 축하 효과 */}
+              {isAchieved && progress >= 100 && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="relative">
+                    <span className="text-3xl animate-bounce block">🎉</span>
+                    <span className="absolute -top-2 -right-2 text-xl animate-ping">✨</span>
+                    <span className="absolute -bottom-2 -left-2 text-xl animate-ping delay-150">⭐</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
